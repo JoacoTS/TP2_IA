@@ -13,6 +13,9 @@ from problema import crear_ind
 from problema import imprimir_ind
 import numpy
 
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 #Busca el menor peso
 creator.create("FitnessMax", base.Fitness, weights = (1.0,))
 
@@ -48,7 +51,7 @@ stats.register("max", numpy.max, axis=0)
 
 
 # Evolution
-ngen = 200
+ngen = 100
 npop = 1000
 pop, logbook = algorithms.eaMuPlusLambda(pop, toolbox, mu=npop, lambda_=npop, cxpb=0.7,   mutpb=0.3, ngen=ngen, stats=stats, halloffame=hof)
 
@@ -58,3 +61,11 @@ print("")
 print(best_solution)
 
 imprimir_ind(best_solution)
+
+
+# History AVG
+plt.figure(figsize=(10,8))
+front = numpy.array([(c['gen'], c['avg'][0]) for c in logbook])
+plt.plot(front[:,0][1:-1], front[:,1][1:-1], "-bo", c="b")
+plt.axis("tight")
+plt.show()
