@@ -2,15 +2,15 @@ from deap import algorithms
 from deap import base
 from deap import creator
 from deap import tools
-from problema2 import NOMBRES_OSOS
-from problema2 import COLORES_OSO
-from problema2 import SOBRINAS
-from problema2 import ACCESORIOS_OSO
-from problema2 import TAM_OSO
-from problema2 import CANT_OSO
-from problema2 import funcion_puntaje
-from problema2 import crear_ind
-from problema2 import imprimir_ind
+from problema import NOMBRES_OSOS
+from problema import COLORES_OSO
+from problema import SOBRINAS
+from problema import ACCESORIOS_OSO
+from problema import TAM_OSO
+from problema import CANT_OSO
+from problema import funcion_puntaje
+from problema import crear_ind
+from problema import imprimir_ind
 import numpy
 
 #Busca el menor peso
@@ -32,8 +32,8 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 #funcion evaluadora de pesos
 toolbox.register("evaluate", funcion_puntaje)
 toolbox.register("select", tools.selTournament, tournsize=10)
-toolbox.register("mate", tools.cxOnePoint)
-toolbox.register("mutate",  tools.mutUniformInt, low = 1, up = 4, indpb=0.3)
+toolbox.register("mate", tools.cxTwoPoint)
+toolbox.register("mutate",  tools.mutUniformInt, low = 1, up = 4, indpb=0.1)
 
 
 pop = toolbox.population(n=100)
@@ -48,7 +48,7 @@ stats.register("max", numpy.max, axis=0)
 
 
 # Evolution
-ngen = 100
+ngen = 200
 npop = 1000
 pop, logbook = algorithms.eaMuPlusLambda(pop, toolbox, mu=npop, lambda_=npop, cxpb=0.7,   mutpb=0.3, ngen=ngen, stats=stats, halloffame=hof)
 
